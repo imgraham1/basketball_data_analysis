@@ -1,5 +1,5 @@
 ---
-title: '618'
+title: 'bball_analysis'
 output: html_document
 ---
 ```{r}
@@ -21,81 +21,44 @@ library(corrplot)
 
 corr_data <- avg_teams[, c(-1,-30,-28,-26)]
 corr_data <- as.matrix(corr_data)
-#Looking at the correlation of features with average teams data
 res <- cor(corr_data)
 corrplot(res)
-
-
-corr_data <- avg_conf[, c(-1,-30,-28,-26)]
-corr_data <- as.matrix(corr_data)
-#Looking at the correlation of features with average conferences data
-res1 <- cor(corr_data)
-corrplot(res1)
 ```
-
-These two heatmaps give us the exact same thing, but the correlatios are higher for the conferences data
-
 
 ```{r fig.height=4}
 library(ggpubr)
+graphing <- function(var){
+  name<- ggplot(totals, aes(x=win_pct, y=var))+ geom_point(size=1) +
+    stat_smooth(method="lm")
+}
 
-
-p <- ggplot(totals, aes(x=win_pct, y=eFGPct))+ geom_point(size=1) +
-    stat_smooth(method="lm")
-p1 <- ggplot(totals, aes(x=win_pct, y=TOPct))+ geom_point(size=1) + 
-    stat_smooth(method="lm")
-p2 <- ggplot(totals, aes(x=win_pct, y=ORPct))+ geom_point(size=1) +
-    stat_smooth(method="lm")
-p3 <- ggplot(totals, aes(x=win_pct, y=FTRate))+ geom_point(size=1) +
-    stat_smooth(method="lm")
-p4 <- ggplot(totals, aes(x=win_pct, y=Size))+ geom_point(size=1) + 
-    stat_smooth(method="lm")
-p5 <- ggplot(totals, aes(x=win_pct, y=Exp))+ geom_point(size=1) +
-    stat_smooth(method="lm")
-p6 <- ggplot(totals, aes(x=win_pct, y=FG2Pct))+ geom_point(size=1) + 
-    stat_smooth(method="lm")
-p7 <- ggplot(totals, aes(x=win_pct, y=FG3Pct))+ geom_point(size=1) + 
-    stat_smooth(method="lm")
-p8 <- ggplot(totals, aes(x=win_pct, y=FTPct)) + geom_point(size=1)+ 
-    stat_smooth(method="lm")
-p9<- ggplot(totals, aes(x=win_pct, y=BlockPct))+ geom_point(size=1) + 
-    stat_smooth(method="lm")
-p10 <- ggplot(totals, aes(x=win_pct, y=FG3Rate))+ geom_point(size=1) + 
-    stat_smooth(method="lm")
-p11<- ggplot(totals, aes(x=win_pct, y=ARate)) + geom_point(size=1)+ 
-    stat_smooth(method="lm")
-p12<- ggplot(totals, aes(x=win_pct, y=StlRate))+ geom_point(size=1) + 
-    stat_smooth(method="lm")
-p13<- ggplot(totals, aes(x=win_pct, y=DFP))+ geom_point(size=1) + 
-    stat_smooth(method="lm")
-p18<- ggplot(totals, aes(x=win_pct, y=Off_1))+ geom_point(size=1) +
-    stat_smooth(method="lm")
-p19<- ggplot(totals, aes(x=win_pct, y=Off_2))+ geom_point(size=1) +
-    stat_smooth(method="lm")
-p20 <- ggplot(totals, aes(x=win_pct, y=Off_3)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p21 <- ggplot(totals, aes(x=win_pct, y=Def_1)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p22 <- ggplot(totals, aes(x=win_pct, y=Def_2)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p23 <- ggplot(totals, aes(x=win_pct, y=Def_3)) + geom_point(size=1)+ 
-    stat_smooth(method="lm")
-p25<- ggplot(totals, aes(x=win_pct, y=AdjTempo)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p27<- ggplot(totals, aes(x=win_pct, y=AdjOE)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p29<- ggplot(totals, aes(x=win_pct, y=AdjDE))+ geom_point(size=1) + 
-    stat_smooth(method="lm")
-
-
-p30<- ggplot(totals, aes(x=win_pct, y=AdjEM))+ geom_point(size=1) +
-    stat_smooth(method="lm")
-
-
+p<-graphing(totals$eFGPct)
+p1 <- graphing(totals$TOPct)
+p2 <- graphing(totals$ORPct)
+p3 <- graphing(totals$FTRate)
+p4 <- graphing(totals$Size)
+p5 <- graphing(totals$Exp)
+p6 <- graphing(totals$FG2Pct)
+p7 <- graphing(totals$FG3Pct)
+p8 <- graphing(totals$FTPct)
+p9<- graphing(totals$BlockPct)
+p10 <- graphing(totals$FG3Rate)
+p11<- graphing(totals$ARate)
+p12<- graphing(totals$StlRate)
+p13<- graphing(totals$DFP)
+p18<- graphing(totals$Off_1)
+p19<- graphing(totals$Off_2)
+p20 <- graphing(totals$Off_3)
+p21 <- graphing(totals$Def_1)
+p22 <- graphing(totals$Def_2)
+p23 <- graphing(totals$Def_3)
+p25<- graphing(totals$AdjTempo)
+p27<-graphing(totals$AdjOE)
+p29<- graphing(totals$AdjDE)
+p30<- graphing(totals$AdjEM)
 plot<-ggarrange(p, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 ,p11, p12, p13, p18, p19, p20, p21, p22, p23, p25, p27, p29, p30, ncol = 5, nrow = 5, common.legend = TRUE)
 
 plot
-
 ```
 
 from these two graphs, we see the variables that have the biggest efect on winning percentage 
@@ -114,145 +77,49 @@ bottom <- sorted_avg_teams1[1:10,]
 
 top_bottom <- rbind(top, bottom)
 
-ggplot(data=avg_teams, aes(x = reorder(team_name, -win_pct), y=win_pct), color=Conf) +
+ggplot(data=avg_teams, aes(x = reorder(TeamName, -win_pct), y=win_pct), color=Conf) +
   geom_bar(stat="identity", width=0.5)
 ```
 
-```{r fig.height=5}
+```{r fig.height=4}
+library(ggpubr)
+
 scale_top <- scale(top_bottom[,c(-1)])
 scale_top <- data.table(scale_top)
 scale_top$TeamName <-top_bottom[,c(1)]
-
 scale_top$category<- ifelse(scale_top$win_pct >0, "high","low")
 
-q <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y = win_pct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q1 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=eFGPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q2 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=TOPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q3 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=ORPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q4 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=AdjEM)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q5 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=AdjDE)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q6 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=AdjTempo)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q7 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Def_3)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q8 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Def_2)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q9 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Def_1)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q10 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Off_1)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q11 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Off_2)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q12 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Off_3)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q13 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct), y=DFP)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q14 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=StlRate)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q15 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct), y=ARate)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q16 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct), y=FG3Rate)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-      labs(title= "Diverging Bars")+
-      coord_flip()
-
-q17 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=BlockPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q18 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=FTPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q19 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=FG3Pct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q20 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=FTRate)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-
-q21 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=FG2Pct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q22 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y = Exp)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q23 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Size)) + 
+graphing <- function(var){
+  name<- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y = var)) + 
       geom_bar(aes(fill = category),stat = "identity") +
       coord_flip()
+}
 
-q24 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=AdjOE)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-
-
-plot<-ggarrange(q, q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23,24, ncol = 5, nrow = 5, common.legend = TRUE)
+p<-graphing(scale_top$eFGPct)
+p1 <- graphing(scale_top$TOPct)
+p2 <- graphing(scale_top$ORPct)
+p3 <- graphing(scale_top$FTRate)
+p4 <- graphing(scale_top$Size)
+p5 <- graphing(scale_top$Exp)
+p6 <- graphing(scale_top$FG2Pct)
+p7 <- graphing(scale_top$FG3Pct)
+p8 <- graphing(scale_top$FTPct)
+p9<- graphing(scale_top$BlockPct)
+p10 <- graphing(scale_top$FG3Rate)
+p11<- graphing(scale_top$ARate)
+p12<- graphing(scale_top$StlRate)
+p13<- graphing(scale_top$DFP)
+p18<- graphing(scale_top$Off_1)
+p19<- graphing(scale_top$Off_2)
+p20 <- graphing(scale_top$Off_3)
+p21 <- graphing(scale_top$Def_1)
+p22 <- graphing(scale_top$Def_2)
+p23 <- graphing(scale_top$Def_3)
+p25<- graphing(scale_top$AdjTempo)
+p27<-graphing(scale_top$AdjOE)
+p29<- graphing(scale_top$AdjDE)
+p30<- graphing(scale_top$AdjEM)
+plot<-ggarrange(p, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 ,p11, p12, p13, p18, p19, p20, p21, p22, p23, p25, p27, p29, p30, ncol = 5, nrow = 5, common.legend = TRUE)
 
 plot
 ```
@@ -290,71 +157,51 @@ p = p + theme(legend.position = "none")
 p
 ```
 
+
+
 ```{r fig.height=4}
 library(ggpubr)
 
-#b12 <- totals[totals$Conf %like% "B12", ]
-#bsth <- totals[totals$Conf %like% "BSth", ]
 swac <- totals[totals$Conf %like% "SWAC", ]
 sec <- totals[totals$Conf %like% "SEC", ]
-sum <- totals[totals$Conf %like% "Sum", ]
 
-#first_analysis <- rbind(b12, bsth, swac)
 first_analysis <- rbind(sec,swac)
 
-p <- ggplot(first_analysis, aes(x=win_pct, y=eFGPct, color=Conf, shape=Conf)) + geom_point(size=1)+
+graphing <- function(var){
+  name <- ggplot(first_analysis, aes(x=win_pct, y=var, color=Conf, shape=Conf)) + geom_point(size=1)+
     stat_smooth(method="lm")
-p1 <- ggplot(first_analysis, aes(x=win_pct, y=TOPct, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p2 <- ggplot(first_analysis, aes(x=win_pct, y=ORPct, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p3 <- ggplot(first_analysis, aes(x=win_pct, y=FTRate, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p4 <- ggplot(first_analysis, aes(x=win_pct, y=Size, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p5 <- ggplot(first_analysis, aes(x=win_pct, y=Exp, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p6 <- ggplot(first_analysis, aes(x=win_pct, y=FG2Pct, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p7 <- ggplot(first_analysis, aes(x=win_pct, y=FG3Pct, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p8 <- ggplot(first_analysis, aes(x=win_pct, y=FTPct, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p9<- ggplot(first_analysis, aes(x=win_pct, y=BlockPct, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p10 <- ggplot(first_analysis, aes(x=win_pct, y=FG3Rate, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p11<- ggplot(first_analysis, aes(x=win_pct, y=ARate, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p12<- ggplot(first_analysis, aes(x=win_pct, y=StlRate, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p13<- ggplot(first_analysis, aes(x=win_pct, y=DFP, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p18<- ggplot(first_analysis, aes(x=win_pct, y=Off_1, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p19<- ggplot(first_analysis, aes(x=win_pct, y=Off_2, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p20 <- ggplot(first_analysis, aes(x=win_pct, y=Off_3, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p21 <- ggplot(first_analysis, aes(x=win_pct, y=Def_1, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p22 <- ggplot(first_analysis, aes(x=win_pct, y=Def_2, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p23 <- ggplot(first_analysis, aes(x=win_pct, y=Def_3, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p25<- ggplot(first_analysis, aes(x=win_pct, y=AdjTempo, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p27<- ggplot(first_analysis, aes(x=win_pct, y=AdjOE, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p29<- ggplot(first_analysis, aes(x=win_pct, y=AdjDE, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p30<- ggplot(first_analysis, aes(x=win_pct, y=AdjEM, color=Conf, shape=Conf)) + geom_point(size=1)+
-    stat_smooth(method="lm")
+}
 
+p<-graphing(first_analysis$eFGPct)
+p1 <- graphing(first_analysis$TOPct)
+p2 <- graphing(first_analysis$ORPct)
+p3 <- graphing(first_analysis$FTRate)
+p4 <- graphing(first_analysis$Size)
+p5 <- graphing(first_analysis$Exp)
+p6 <- graphing(first_analysis$FG2Pct)
+p7 <- graphing(first_analysis$FG3Pct)
+p8 <- graphing(first_analysis$FTPct)
+p9<- graphing(first_analysis$BlockPct)
+p10 <- graphing(first_analysis$FG3Rate)
+p11<- graphing(first_analysis$ARate)
+p12<- graphing(first_analysis$StlRate)
+p13<- graphing(first_analysis$DFP)
+p18<- graphing(first_analysis$Off_1)
+p19<- graphing(first_analysis$Off_2)
+p20 <- graphing(first_analysis$Off_3)
+p21 <- graphing(first_analysis$Def_1)
+p22 <- graphing(first_analysis$Def_2)
+p23 <- graphing(first_analysis$Def_3)
+p25<- graphing(first_analysis$AdjTempo)
+p27<-graphing(first_analysis$AdjOE)
+p29<- graphing(first_analysis$AdjDE)
+p30<- graphing(first_analysis$AdjEM)
 plot<-ggarrange(p, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 ,p11, p12, p13, p18, p19, p20, p21, p22, p23, p25, p27, p29, p30, ncol = 5, nrow = 5, common.legend = TRUE)
 
 plot
 ```
+
+
 
 ```{r fig.height=3}
 library(ggplot2)
@@ -368,138 +215,49 @@ top_bottom <- rbind(top, bottom)
 
 ```
 
-```{r fig.height=5}
+
+```{r}
 scale_top <- scale(top_bottom[,c(-1)])
 scale_top <- data.table(scale_top)
 scale_top$TeamName <-top_bottom[,c(1)]
 
 scale_top$category<- ifelse(scale_top$win_pct >0, "high","low")
 
-q <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y = win_pct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q1 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=eFGPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q2 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=TOPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q3 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=ORPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q4 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=AdjEM)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q5 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=AdjDE)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q6 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=AdjTempo)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q7 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Def_3)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q8 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Def_2)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q9 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Def_1)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q10 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Off_1)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q11 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Off_2)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q12 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Off_3)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q13 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct), y=DFP)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q14 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=StlRate)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q15 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct), y=ARate)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q16 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct), y=FG3Rate)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-      labs(title= "Diverging Bars")+
-      coord_flip()
-
-q17 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=BlockPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q18 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=FTPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q19 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=FG3Pct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q20 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=FTRate)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-
-q21 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=FG2Pct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q22 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y = Exp)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q23 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Size)) + 
+graphing <- function(var){
+  name <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y = var)) + 
       geom_bar(aes(fill = category),stat = "identity") +
       coord_flip()
+}
 
-
-plot<-ggarrange(q, q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23, ncol = 5, nrow = 5, common.legend = TRUE)
+p<-graphing(scale_top$eFGPct)
+p1 <- graphing(scale_top$TOPct)
+p2 <- graphing(scale_top$ORPct)
+p3 <- graphing(scale_top$FTRate)
+p4 <- graphing(scale_top$Size)
+p5 <- graphing(scale_top$Exp)
+p6 <- graphing(scale_top$FG2Pct)
+p7 <- graphing(scale_top$FG3Pct)
+p8 <- graphing(scale_top$FTPct)
+p9<- graphing(scale_top$BlockPct)
+p10 <- graphing(scale_top$FG3Rate)
+p11<- graphing(scale_top$ARate)
+p12<- graphing(scale_top$StlRate)
+p13<- graphing(scale_top$DFP)
+p18<- graphing(scale_top$Off_1)
+p19<- graphing(scale_top$Off_2)
+p20 <- graphing(scale_top$Off_3)
+p21 <- graphing(scale_top$Def_1)
+p22 <- graphing(scale_top$Def_2)
+p23 <- graphing(scale_top$Def_3)
+p25<- graphing(scale_top$AdjTempo)
+p27<-graphing(scale_top$AdjOE)
+p29<- graphing(scale_top$AdjDE)
+p30<- graphing(scale_top$AdjEM)
+plot<-ggarrange(p, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 ,p11, p12, p13, p18, p19, p20, p21, p22, p23, p25, p27, p29, p30, ncol = 5, nrow = 5, common.legend = TRUE)
 
 plot
 ```
+
 
 ```{r}
 cluster_data <- avg_teams[, c('TeamName','eFGPct', 'ORPct', 'FTRate', 'Size', 'Exp', 'FG2Pct', 'FG3Pct', 'FTPct', 'BlockPct', 'AdjOE', 'AdjDE', 'AdjEM', 'win_pct')]
@@ -508,12 +266,10 @@ cluster_data <- avg_teams[, c('TeamName','eFGPct', 'ORPct', 'FTRate', 'Size', 'E
 
 ```{r fig.height=9}
 scale_new <- scale(cluster_data[,-1], center = TRUE)
-#head(scale_new, n=14)
 
 dist_matrix <- as.matrix(scale_new)
 dist_matrix <- dist(dist_matrix, method = "manhattan", diag = TRUE, upper = TRUE)
 x<-as.table(as.matrix(dist_matrix))
-#x[1:5, 1:5]
 
 labs <- c()
 for (i in cluster_data$TeamName){
@@ -554,8 +310,7 @@ clusplot(sec.pam,lines=0,labels=32, main = "k-mediod clustering 32 different gro
 
 ```{r fig.height=5}
 sil <- silhouette(sec.pam$clustering, dist_matrix)
-plot(sil, main = "Silhouette plot of 3 car clusters")
-
+plot(sil, main = "Silhouette plot of new clusters")
 ```
 
 ```{r}
@@ -580,21 +335,14 @@ clustered_df1 <- clustered_df1[, lapply(.SD, mean), by=list(c)]
 ```{r}
 cluster_assigned <- (clustered_df[, 34])
 team_name <- (clustered_df[, 1])
-
 cluster_assigned <-unlist(cluster_assigned)
-
 team_name <-unlist(team_name)
-
 names(cluster_assigned) <- team_name
-
-
 ```
 
 ```{r}
 totals_clustered <- totals[,-35]
-
 totals_clustered$c <- "nan"
-
 i=1
 for (x in totals_clustered$TeamName){
   totals_clustered$c[i]<-cluster_assigned[[x]]
@@ -636,211 +384,95 @@ p
 ```{r fig.height=4}
 library(ggpubr)
 
-#b12 <- totals[totals$Conf %like% "B12", ]
-#bsth <- totals[totals$Conf %like% "BSth", ]
 sec <- totals_clustered[totals_clustered$c == "7", ]
 swac <- totals_clustered[totals_clustered$c == "6", ]
 
-
-#first_analysis <- rbind(b12, bsth, swac)
 first_analysis <- rbind(sec,swac)
 
-p <- ggplot(first_analysis, aes(x=win_pct, y=eFGPct, color=c, shape=c)) + geom_point(size=1)+
+graphing <- function(var){
+  name <- ggplot(first_analysis, aes(x=win_pct, y=var, color=c)) + geom_point(size=1)+
     stat_smooth(method="lm")
-p1 <- ggplot(first_analysis, aes(x=win_pct, y=TOPct, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p2 <- ggplot(first_analysis, aes(x=win_pct, y=ORPct, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p3 <- ggplot(first_analysis, aes(x=win_pct, y=FTRate, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p4 <- ggplot(first_analysis, aes(x=win_pct, y=Size, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p5 <- ggplot(first_analysis, aes(x=win_pct, y=Exp, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p6 <- ggplot(first_analysis, aes(x=win_pct, y=FG2Pct, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p7 <- ggplot(first_analysis, aes(x=win_pct, y=FG3Pct, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p8 <- ggplot(first_analysis, aes(x=win_pct, y=FTPct, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p9<- ggplot(first_analysis, aes(x=win_pct, y=BlockPct, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p10 <- ggplot(first_analysis, aes(x=win_pct, y=FG3Rate, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p11<- ggplot(first_analysis, aes(x=win_pct, y=ARate, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p12<- ggplot(first_analysis, aes(x=win_pct, y=StlRate, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p13<- ggplot(first_analysis, aes(x=win_pct, y=DFP, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p18<- ggplot(first_analysis, aes(x=win_pct, y=Off_1, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p19<- ggplot(first_analysis, aes(x=win_pct, y=Off_2, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p20 <- ggplot(first_analysis, aes(x=win_pct, y=Off_3, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p21 <- ggplot(first_analysis, aes(x=win_pct, y=Def_1, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p22 <- ggplot(first_analysis, aes(x=win_pct, y=Def_2, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p23 <- ggplot(first_analysis, aes(x=win_pct, y=Def_3, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p25<- ggplot(first_analysis, aes(x=win_pct, y=AdjTempo, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p27<- ggplot(first_analysis, aes(x=win_pct, y=AdjOE, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p29<- ggplot(first_analysis, aes(x=win_pct, y=AdjDE, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
-p30<- ggplot(first_analysis, aes(x=win_pct, y=AdjEM, color=c, shape=c)) + geom_point(size=1)+
-    stat_smooth(method="lm")
+}
 
+p<-graphing(first_analysis$eFGPct)
+p1 <- graphing(first_analysis$TOPct)
+p2 <- graphing(first_analysis$ORPct)
+p3 <- graphing(first_analysis$FTRate)
+p4 <- graphing(first_analysis$Size)
+p5 <- graphing(first_analysis$Exp)
+p6 <- graphing(first_analysis$FG2Pct)
+p7 <- graphing(first_analysis$FG3Pct)
+p8 <- graphing(first_analysis$FTPct)
+p9<- graphing(first_analysis$BlockPct)
+p10 <- graphing(first_analysis$FG3Rate)
+p11<- graphing(first_analysis$ARate)
+p12<- graphing(first_analysis$StlRate)
+p13<- graphing(first_analysis$DFP)
+p18<- graphing(first_analysis$Off_1)
+p19<- graphing(first_analysis$Off_2)
+p20 <- graphing(first_analysis$Off_3)
+p21 <- graphing(first_analysis$Def_1)
+p22 <- graphing(first_analysis$Def_2)
+p23 <- graphing(first_analysis$Def_3)
+p25<- graphing(first_analysis$AdjTempo)
+p27<-graphing(first_analysis$AdjOE)
+p29<- graphing(first_analysis$AdjDE)
+p30<- graphing(first_analysis$AdjEM)
 plot<-ggarrange(p, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 ,p11, p12, p13, p18, p19, p20, p21, p22, p23, p25, p27, p29, p30, ncol = 5, nrow = 5, common.legend = TRUE)
 
 plot
 ```
 
-```{r fig.height=3}
+```{r}
 library(ggplot2)
 
 sorted_avg_conf <- clustered_df1[with(clustered_df1, order(-win_pct)), ]
 sorted_avg_conf1 <- clustered_df1[with(clustered_df1, order(win_pct)), ]
 top <- sorted_avg_conf[1:5,]
 bottom <- sorted_avg_conf1[1:5,]
-
 top_bottom <- rbind(top, bottom)
 
-```
 
-```{r fig.height=5}
 scale_top <- scale(top_bottom[,c(-1)])
 scale_top <- data.table(scale_top)
 scale_top$TeamName <-top_bottom[,c(1)]
 
 scale_top$category<- ifelse(scale_top$win_pct >0, "high","low")
 
-q <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y = win_pct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q1 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=eFGPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q2 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=TOPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q3 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=ORPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q4 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=AdjEM)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q5 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=AdjDE)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q6 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=AdjTempo)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q7 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Def_3)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q8 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Def_2)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q9 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Def_1)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q10 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Off_1)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q11 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Off_2)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q12 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Off_3)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q13 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct), y=DFP)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q14 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=StlRate)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q15 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct), y=ARate)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q16 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct), y=FG3Rate)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-      labs(title= "Diverging Bars")+
-      coord_flip()
-
-q17 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=BlockPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q18 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=FTPct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q19 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=FG3Pct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q20 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=FTRate)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-
-q21 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=FG2Pct)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q22 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y = Exp)) + 
-      geom_bar(aes(fill = category),stat = "identity") +
-
-      coord_flip()
-
-q23 <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y=Size)) + 
+graphing <- function(var){
+  name <- ggplot(scale_top,aes(x = reorder(TeamName, win_pct),y = var)) + 
       geom_bar(aes(fill = category),stat = "identity") +
       coord_flip()
+}
 
-
-plot<-ggarrange(q, q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23, ncol = 5, nrow = 5, common.legend = TRUE)
+p<-graphing(scale_top$eFGPct)
+p1 <- graphing(scale_top$TOPct)
+p2 <- graphing(scale_top$ORPct)
+p3 <- graphing(scale_top$FTRate)
+p4 <- graphing(scale_top$Size)
+p5 <- graphing(scale_top$Exp)
+p6 <- graphing(scale_top$FG2Pct)
+p7 <- graphing(scale_top$FG3Pct)
+p8 <- graphing(scale_top$FTPct)
+p9<- graphing(scale_top$BlockPct)
+p10 <- graphing(scale_top$FG3Rate)
+p11<- graphing(scale_top$ARate)
+p12<- graphing(scale_top$StlRate)
+p13<- graphing(scale_top$DFP)
+p18<- graphing(scale_top$Off_1)
+p19<- graphing(scale_top$Off_2)
+p20 <- graphing(scale_top$Off_3)
+p21 <- graphing(scale_top$Def_1)
+p22 <- graphing(scale_top$Def_2)
+p23 <- graphing(scale_top$Def_3)
+p25<- graphing(scale_top$AdjTempo)
+p27<-graphing(scale_top$AdjOE)
+p29<- graphing(scale_top$AdjDE)
+p30<- graphing(scale_top$AdjEM)
+plot<-ggarrange(p, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 ,p11, p12, p13, p18, p19, p20, p21, p22, p23, p25, p27, p29, p30, ncol = 5, nrow = 5, common.legend = TRUE)
 
 plot
 ```
+
+
 
